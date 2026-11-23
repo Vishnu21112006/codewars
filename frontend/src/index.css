@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-navy-950 text-slate-100 font-sans antialiased selection:bg-violet-accent/30 selection:text-white min-h-screen overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.08) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(15, 23, 42, 0.9) 0px, transparent 70%);
+    background-attachment: fixed;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-slate-900/40 backdrop-blur-xl border border-slate-700/40 shadow-glass rounded-2xl;
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:border-slate-500/50 hover:bg-slate-900/60 hover:shadow-glow-blue;
+  }
+
+  .glass-input {
+    @apply bg-slate-950/60 border border-slate-700/60 text-slate-100 placeholder-slate-400 rounded-xl px-4 py-2.5 
+           focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-400 transition-all duration-200 backdrop-blur-sm;
+  }
+
+  .glass-panel {
+    @apply bg-navy-900/70 backdrop-blur-2xl border border-slate-800/80;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-sky-300 to-violet-400;
+  }
+
+  .text-gradient-purple {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-pink-400;
+  }
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(11, 15, 25, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(56, 189, 248, 0.6);
+}
