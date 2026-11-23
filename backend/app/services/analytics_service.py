@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from collections import Counter
 from typing import Dict, Any, List, Optional
 from app.services.equipment_service import equipment_service
@@ -178,7 +178,7 @@ class AnalyticsService:
             student=student_analytics,
             faculty_admin=faculty_admin_analytics,
             data_source="backend_live_mesh",
-            timestamp=datetime.utcnow().isoformat() + "Z",
+            timestamp=datetime.now(timezone.utc).isoformat(),
         )
 
 analytics_service = AnalyticsService()

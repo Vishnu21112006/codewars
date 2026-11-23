@@ -1,7 +1,7 @@
 import logging
 import threading
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Optional, Dict, Any, Tuple
 from app.core.config import settings
 from app.services.equipment_service import equipment_service
@@ -331,7 +331,7 @@ class BookingService:
 
             status = "pending" if requires_approval else "approved"
 
-            now_iso = datetime.utcnow().isoformat() + "Z"
+            now_iso = datetime.now(timezone.utc).isoformat()
             new_booking = {
                 "id": booking_id,
                 "equipment_id": payload.equipment_id,
@@ -415,7 +415,7 @@ class BookingService:
                 )
 
             # 3. Apply approval
-            now_iso = datetime.utcnow().isoformat() + "Z"
+            now_iso = datetime.now(timezone.utc).isoformat()
             target["status"] = "approved"
             target["faculty_approved"] = True
             target["faculty_mentor"] = action.faculty_name or target.get("faculty_mentor", "Faculty In-Charge")
@@ -460,7 +460,7 @@ class BookingService:
             if not target:
                 return {}, f"Booking request with ID '{booking_id}' not found."
 
-            now_iso = datetime.utcnow().isoformat() + "Z"
+            now_iso = datetime.now(timezone.utc).isoformat()
             target["status"] = "rejected"
             target["faculty_approved"] = False
             target["faculty_note"] = action.comments
@@ -512,7 +512,7 @@ class BookingService:
                     "Only PENDING requests may be cancelled by students; approved passes must be revoked by faculty."
                 )
 
-            now_iso = datetime.utcnow().isoformat() + "Z"
+            now_iso = datetime.now(timezone.utc).isoformat()
             target["status"] = "cancelled"
             target["updated_at"] = now_iso
 
