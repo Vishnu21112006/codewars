@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from app.core.config import settings
 from app.api.v1.health import router as health_router
 from app.api.v1.equipment import router as equipment_router
@@ -9,12 +10,15 @@ from app.api.v1.bookings import router as bookings_router
 from app.api.v1.analytics import router as analytics_router
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    description="LabLink - GenAI-powered College Laboratory Resource-Sharing Platform API",
+    title="LabLink — Making College Laboratories More Accessible",
+    description="GenAI-powered campus laboratory resource-sharing platform that helps students discover and access specialised equipment, development kits, and laboratory workstations across departments. Features equipment discovery, intelligent slot booking, project-based access requests, and faculty approvals while optimising resource utilisation through Google OR-Tools CP-SAT conflict resolution.",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
 )
+
+# High-Efficiency Compression Middleware (compresses responses > 1KB)
+app.add_middleware(GZipMiddleware, minimum_size=1000)
 
 # CORS configuration
 if settings.BACKEND_CORS_ORIGINS:
