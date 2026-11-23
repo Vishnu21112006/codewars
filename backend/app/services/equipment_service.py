@@ -436,6 +436,7 @@ SAMPLE_EQUIPMENT_DATA: List[Dict[str, Any]] = [
 class EquipmentService:
     def __init__(self):
         self._equipment: List[Dict[str, Any]] = list(SAMPLE_EQUIPMENT_DATA)
+        self._equipment_map: Dict[str, Dict[str, Any]] = {eq["id"]: eq for eq in self._equipment}
         self._supabase_client = None
         self._init_supabase()
 
@@ -520,8 +521,10 @@ class EquipmentService:
         }
 
     def get_equipment_by_id(self, equipment_id: str) -> Optional[Dict[str, Any]]:
-        """Finds equipment by ID and computes smart alternative recommendations."""
-        item = next((eq for eq in self._equipment if eq["id"] == equipment_id), None)
+        """Finds equipment by ID with O(1) indexed lookup and computes smart alternative recommendations."""
+        item = self._equipment_map.get(equipment_id)
+        if not item:
+            item = next((eq for eq in self._equipment if eq["id"] == equipment_id), None)
         if not item:
             return None
 
